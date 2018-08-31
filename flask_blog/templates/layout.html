@@ -1,0 +1,47 @@
+<!doctype thml>
+<title>Flask Blog</title>
+
+<link href="https://fonts.googleapis.com/earlyaccess/mplus1p.css" rel="stylesheet" type="text/css">
+<link rel=stylesheet href="{{ url_for('static', filename='style.css') }}">
+
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css">
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+<div class="container">
+	<nav class="navbar navbar-expand-sm navbar-light bg-light">
+		<a class="navbar-brand" href="{{ url_for('show_entries') }}">Flask Blog</a>
+		<button class="navbar-toggler" type="buttom" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="nav navbar-nav navbar-right">
+				<li class="nav-item">
+				{% if not session.logged_in %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{ url_for('login') }}">Login</a>
+				</li>
+				{% else %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{ url_for("new_entry") }}">New Article</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+	</nav>
+	{% for message in get_flashed_messages() %}
+		<div class="alert alert-info" role="alert">
+			{{ message }}
+		</div>
+	{% endfor %}
+
+	<div class="blog-body">
+		{% block body %}{% endblock %}
+	</div>
+</div>
+
+
